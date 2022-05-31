@@ -1,22 +1,46 @@
+let products = [
+	{name: "guitar", price:520.99},
+	{name: "bass", price:200.35},
+	{name: "book box", price:199.99},
+	{name: "babidi", price: 0},
+	{name: "bottle", price:2.99}
+];
 
+let main = ()=>{
+	let content = document.querySelector('#content');
+	content.innerHTML = '';
+	let text = '';
+	for(let i = 0; i<products.length; i++){
+			text+= `
+				<hr>
+				<h2>Nome do produto: ${products[i].name}</h2>
+				<h3>Preço do produto: ${products[i].price}</h3>
+				<hr>
+			`
+	}
+	content.innerHTML = text;
+}
 
-//criando o array de JSONS.
-	let products = [{name: "guitar", price: 200.00},
-		{name: "bass", price:350.00},
-		{name: "acoustic guitar", price:100}
-	]; 
+main();
 
-//Criando a função pra caçar o produto quando o maluco apertar o botão.
-/*DETALHE: esse '()=>' é uma arrow function. É só um jeito diferente de
-escrever funções. ()=>{} é como function(){}.
-*/
-
-document.querySelector('#searchButton').addEventListener('click', ()=>{
-	let input = document.querySelector('#searchInput'); //capturando o input, dessa forma teremos acesso ao valor que o usuário inseriu nele (o produto que será buscado)
-	let content = document.querySelector('#content'); //capturando a div de conteúdo para exibir os dados do produto nela futuramente
-	for(let i = 0; i<products.length; i++){ //for para percorrer todo o JSON e verificá-lo item por item
-		if(input.value==products[i].name){ // aqui a gente vê se o valor inserido pelo usuário coincide com algum nome de um produto do array de JSONS. Caso exista, será exibido.
-			content.innerHTML = `Nome: ${products[i].name} | Preço: ${products[i].price}`
+document.querySelector('#searchInput').addEventListener('input', ()=>{
+	let content = document.querySelector('#content');
+	content.innerHTML = '';
+	let search = document.querySelector('#searchInput').value;
+	let text;
+	if(search.length<1){
+		main();
+	}else{
+		for(let i = 0; i<products.length; i++){
+			if(products[i].name.includes(search)){
+				text+= `
+					<hr>
+					<h2>Nome do produto: ${products[i].name}</h2>
+					<h3>Preço do produto: ${products[i].price}</h3>
+					<hr>
+				`
+			}
 		}
+		content.innerHTML = text;
 	}
 });
